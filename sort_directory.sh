@@ -1,7 +1,19 @@
 #! /bin/bash
 
-## create the directory, -p means it will create parent dirs
-## and not complain if the file already exists
+#######################################################################
+## Script name: fix_dos_formatting.ksh
+## Purpose: Convert files into UNIX format
+## and change file format to Unix
+##
+## Parameters:
+## In (Optional): <LIST OF INPUT FILES>
+## Out: 0 (SUCCESS)            1 (FAIL)      
+##
+## Initial Creation: Mitchell Henschel 05/05/2022
+##
+#######################################################################
+
+## choose the starting directory
 dir_txt="$HOME/Documents/txt_files"
 mkdir -p "$dir_txt"
 dir_doc="$HOME/Documents/doc_files"
@@ -11,8 +23,6 @@ mkdir -p "$dir_pdf"
 
 for file in ~/Downloads/*
 do
-	## basename removes file path and remove the extension if
-	## a second arg is provided
 	name="$(basename "$file")"
 	if [ "${name##*.}" == "jpg" ] || [ "${name##*.}" == "png" ] ; then
 		echo "Moving $name to $HOME/Pictures"
