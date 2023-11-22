@@ -5,6 +5,7 @@
  - i3 Window Tilling Manager Settings/Keybindings
  - ideavmrc for Jetbrains IDE vim configurations
  - kitty terminal configurations
+ - R settings - Rprofile and Renviron
  - zshrc
 
 #### Scripts
