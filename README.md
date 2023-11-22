@@ -1,5 +1,5 @@
 ## Useful Scripts
-### A collection of useful scripts and configurations for personal useful
+### A collection of useful scripts and configurations for personal use
 
 #### Configs
  - i3 Window Tilling Manager Settings/Keybindings
