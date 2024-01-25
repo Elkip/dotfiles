@@ -1,0 +1,14 @@
+{
+	"font_face": "Jetbrains Mono",
+	"font_size": 11,
+	"theme": "Adaptive.sublime-theme",
+	"hardware_acceleration": "opengl",
+	"ignored_packages":
+	[
+		//"Vintage",
+/*"Calamity",*/
+/*"Theme - Adaptify",*/
+	],
+	"index_files": true,
+	"color_scheme": "Packages/Calamity/Calamity.tmTheme",
+}

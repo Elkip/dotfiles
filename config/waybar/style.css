@@ -1,0 +1,180 @@
+@keyframes blink-warning {
+    70% {
+        color: white;
+    }
+
+    to {
+        color: white;
+        background-color: orange;
+    }
+}
+
+@keyframes blink-critical {
+    70% {
+      color: white;
+    }
+
+    to {
+        color: white;
+        background-color: red;
+    }
+}
+
+* {
+	font-family: JetBrains Mono;
+	font-weight: 500;
+	font-size: 11pt;
+	color: #c0caf5;
+}
+
+/* main waybar */
+window#waybar {
+    background-color: transparent;
+    border-width: 2px 4px;
+    border-radius: 40px;
+}
+
+/* when hovering over modules */
+tooltip {
+	background: #1e1e2e;
+    border-width: 2px 4px;
+    border-radius: 40px;
+}
+
+#workspaces button {
+	/* padding: 5px; */
+    padding-left: 6px;
+    padding-right: 9px;
+    color: #577ead;
+}
+
+#workspaces button:hover {
+    background-color: rgba(0, 0, 0, 0.2)
+}
+
+/* Sets active workspace to have a solid line on the bottom */
+#workspaces button.active {
+	border-bottom: 3px solid #B292E9;
+	transition: all 0.3s ease-in-out;
+}
+
+/* More workspace stuff for highlighting on hover */
+#workspaces button.focused {
+    color: #B292E9;
+	transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.urgent {
+	color: #f7768e;
+	transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+	background: #11111b;
+	color: #cdd6f4;
+	transition: all 0.3s ease-in-out;
+}
+
+#waybar > box {
+    border-width: 2px 4px;
+    border-radius: 40px;
+    margin: 8px 8px 8px 8px;
+    background-color: rgba(20, 22, 30, 0.7); 
+    box-shadow: 1px 1px 3px 1px #11111b;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+/* Sets background, padding, margins, and borders for specified modules */
+#workspaces,
+#clock,
+#window,
+#temperature,
+#custom-weather,
+#custom-keyboardlayout,
+#workspaces {
+    padding: 0 5px;
+    margin: 2px 2px 2px 2px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    border-radius: 2px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: #212222;
+    color: #ffffff;
+    border-width: 2px 4px;
+    border-radius: 40px;
+    border: solid;
+    opacity: .8;
+    /* padding: 0px 0px 0px 10px; */
+    font-weight: bold;   
+}
+
+/* Hide window module when not focused on window or empty workspace */
+/* window#waybar.empty #window {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	background-color: transparent;
+}
+
+#window {
+	border-radius: 8px;
+} */
+
+#tray {
+    padding-left: 1rem;
+	margin-right: 2px;
+}
+
+#pulseaudio {
+    color: #889adf;
+    border-left: 0px;
+    border-right: 0px;
+    margin-right: 9px;
+}
+
+#pulseaudio.microphone {
+    border-left: 0px;
+    border-right: 0px;
+    margin-left: 0;
+    padding-left: 0;
+    border-radius: 0 0 0 0;
+}
+
+#network,
+#cpu,
+#memory {
+    color: #6c9fd3;
+    margin-right: 3px;
+    margin-left: 2px;
+}
+
+#cpu.warning {
+    color: orange;
+}
+
+#cpu.critical {
+    color: red;
+}
+
+/* close right side of bar */
+#temperature {
+	border-radius: 8px 0 0 8px;
+}
+
+#custom-power {
+    color: #81A1C1;
+    font-size:18px;
+    margin-right: 3px;
+    margin-left: 2px;
+    padding-right: 1rem;
+}
+
+#custom-media {
+    margin-right: 4px;
+    margin-left: 3px;
+    padding-left: 1rem;
+}

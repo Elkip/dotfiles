@@ -1,0 +1,200 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 60, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 5, // Gaps between modules
+
+    // Choose the order of the modules
+    
+    "modules-left": [
+        "hyprland/workspaces"
+        //"hyprland/window",
+    ],
+    "modules-center": [
+        "clock",
+        "custom/weather"
+    ],
+    "modules-right": [
+        "custom/media",
+        "tray",
+        "keyboard-state", 
+        "pulseaudio", 
+        "cpu", 
+        "memory", 
+        "network",
+        "custom/power"
+    ],
+    
+    // Modules configuration
+    
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            //"1": "",
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        },
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+
+    "keyboard-state": {
+        //"numlock": true,
+        "capslock": true,
+        //"format": "{name} {icon}",
+        "format": "{icon}",
+        "format-icons": {
+            "locked": "",
+            //"unlocked": ""
+            "unlocked": ""
+        }
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+
+    "clock": {
+        "interval": 10,
+        // "format-alt": " {:%e %b %Y}", // Icon: calendar-alt
+        "format": " {:%a,%b %e  %H:%M} ",
+        "tooltip-format": "{:%e %B %Y}",
+        "on-click": "galendae -c $HOME/.config/galendae/galendae.conf"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "  {usage}%", // Icon: microchip
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "on-click": "kitty -e 'bashtop'",
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "  {}%", // Icon: memory
+        "on-click": "kitty -e 'bashtop'", 
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": " ", // Icon: wifi
+        "format-ethernet": " ", // Icon: ethernet
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}",
+        "on-click": "kitty -e 'nmcli'",
+    },
+
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        //"format-source": "{volume}% ",
+        //"format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%",
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " ",
+        "on-click": "pamixer --default-source -t",
+        "on-click-right": "pavucontrol",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+
+    // to use the weather module replace <your_location> with your city or town
+    // note: do not use spaces: new york would be newyork
+    "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.sh annarbor",
+        "return-type": "json",
+        "interval": 600
+    },
+
+    "custom/power": {
+        "format":"⏻",
+        "on-click": "exec ~/.config/waybar/scripts/power-menu.sh",
+        //"on-click": "exec wlogout",
+        "tooltip": false
+    },
+
+    //"custom/media": {
+    //    "format": "{icon}",
+    //    "return-type": "json",
+    //    "max-length": 40,
+    //    "format-icons": {
+    //        "spotify": "",
+    //        "default": "🎜"
+    //    },
+    //    "escape": true,
+    //    "exec": "/usr/bin/python3 $HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null",
+    //    "return-type": "json"
+    //}
+
+    "custom/media": {
+       "interval": 1,
+       "return-type": "json",
+       "exec": "/home/elkip/.cargo/bin/waybar_media_display",
+       "exec-if": "pgrep spotify",
+       "on-click":"playerctl --player=spotify play-pause",
+       "on-click-right": "playerctl --player=spotify next",
+       "escape": false
+    }
+}
+

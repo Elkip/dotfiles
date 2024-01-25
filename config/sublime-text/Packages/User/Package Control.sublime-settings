@@ -1,0 +1,12 @@
+{
+	"bootstrapped": true,
+	"installed_packages":
+	[
+		"Calamity",
+		"Package Control",
+		"Theme - Adaptify",
+	],
+	"in_process_packages":
+	[
+	],
+}
