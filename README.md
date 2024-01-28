@@ -5,12 +5,13 @@
 Font Face: Jetbrains Mono
 
 GTK:
-gtk-icon-theme-name = Vivid-Glassy-Dark-Icons
-gtk-theme-name = Vivid-Dark-GTK
-gtk-cursor-theme-name = Twilight-cursors
+
+ - gtk-icon-theme-name = Vivid-Glassy-Dark-Icons
+ - gtk-theme-name = Vivid-Dark-GTK
+ - gtk-cursor-theme-name = Twilight-cursors
 
 QT5:
-colorscheme = oomox-arc-dark.conf
+ - colorscheme = oomox-arc-dark.conf
 
 Spicetify Theme: Rose Pine
 
