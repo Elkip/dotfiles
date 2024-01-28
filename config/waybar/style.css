@@ -38,7 +38,8 @@ window#waybar {
 tooltip {
 	background: #1e1e2e;
     border-width: 2px 4px;
-    border-radius: 40px;
+   /* border-radius: 40px; */
+    padding: 10px;
 }
 
 #workspaces button {
