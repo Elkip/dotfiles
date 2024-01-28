@@ -1,3 +1,3 @@
 WORK_PATH="/home/elkip/Workspace/"
-DATA_PATH="/home/elkip/Datasets/"
-# R_LIBS_USER="/home/elkip/Packages/R/4.1"
+DATA_PATH="/media/Datasets/"
+R_LIBS_USER="/home/elkip/Packages/R/4.3"

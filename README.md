@@ -1,8 +1,20 @@
-## Useful Scripts
-### A collection of useful scripts and configurations for personal use
+## My Dotfiles
+
+### Themes
+
+Font Face: Jetbrains Mono
+
+GTK:
+gtk-icon-theme-name = Vivid-Glassy-Dark-Icons
+gtk-theme-name = Vivid-Dark-GTK
+gtk-cursor-theme-name = Twilight-cursors
+
+QT5:
+colorscheme = oomox-arc-dark.conf
+
+Spicetify Theme: Rose Pine
 
 #### Configs
- - gtk and qt configurations
  - nwg-dock, mako, swaylock, swayidle, and wofi configs
  - ideavmrc for Jetbrains IDE vim configurations
  - kitty terminal 
