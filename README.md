@@ -1,12 +1,12 @@
 ## My Dotfiles
 
-![img1](https://github.com/Elkip/dotfiles/blob/master/pics/pics1_clean.png)
+![img1](./pics/pic1_clean.png)
 
 
-![img2](https://github.com/Elkip/dotfiles/blob/master/pics/pics2_stacked.png)
+![img2](./pics/pic2_stacked.png)
 
 
-![img3](https://github.com/Elkip/dotfiles/blob/master/pics/pics3_tiled.png)
+![img3](./pics/pic3_tiled.png)
 
 
 ### Themes
