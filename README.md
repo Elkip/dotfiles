@@ -1,5 +1,14 @@
 ## My Dotfiles
 
+![img1](https://github.com/Elkip/dotfiles/blob/master/pics/pics1_clean.png)
+
+
+![img2](https://github.com/Elkip/dotfiles/blob/master/pics/pics2_stacked.png)
+
+
+![img3](https://github.com/Elkip/dotfiles/blob/master/pics/pics3_tiled.png)
+
+
 ### Themes
 
 Font Face: Jetbrains Mono
@@ -16,7 +25,7 @@ QT5:
 Spicetify Theme: Rose Pine
 
 #### Configs
- - nwg-dock, mako, swaylock, swayidle, and wofi configs
+ - mako, swaylock, swayidle, and wofi configs
  - ideavmrc for Jetbrains IDE vim configurations
  - kitty terminal 
  - Waybar (reqiures waybar_media_display from cargo)
