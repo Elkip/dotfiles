@@ -1,4 +1,4 @@
-neofetch
+neofetch --ascii
 
 # Powerlevel 10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -12,9 +12,10 @@ export EDITOR='vim'
 ## Aliases
 
 alias vi="$EDITOR"
-alias ls="eza -a --icons"
-alias ll="eza -la --icons"
-alias lt="eza -a --tree --level=1 --icons"
+alias ls="la"
+alias ll="eza -l --icons always"
+alias la="eza -la --icons always"
+alias lt="eza -a --tree --level=1 --icons always"
 alias grep='grep --color=auto'
 alias gst="git status"
 alias push="git push origin main"
@@ -37,14 +38,10 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Search history settings
-HISTDUP=erase
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 setopt appendhistory
-setopt sharehistory
-setopt incappendhistory
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
 
 ## External Packages
 
@@ -70,3 +67,11 @@ zstyle :compinstall filename '/home/elkip/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+
+# bun completions
+[ -s "/home/elkip/.bun/_bun" ] && source "/home/elkip/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
