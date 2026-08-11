@@ -92,6 +92,7 @@ tooltip {
 #window,
 #temperature,
 #custom-weather,
+#battery,
 #custom-keyboardlayout,
 #workspaces {
     padding: 0 5px;
@@ -145,6 +146,10 @@ tooltip {
     border-radius: 0 0 0 0;
 }
 
+#battery {
+    color: #889af0;
+}
+
 #network,
 #cpu,
 #memory {
@@ -159,11 +164,6 @@ tooltip {
 
 #cpu.critical {
     color: red;
-}
-
-/* close right side of bar */
-#temperature {
-	border-radius: 8px 0 0 8px;
 }
 
 #custom-power {

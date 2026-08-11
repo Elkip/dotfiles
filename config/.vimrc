@@ -10,7 +10,7 @@ set langmenu=en
 set encoding=utf8
 set ffs=unix
 " How many lines to remember
-set history 500
+set history=1000
 " Wrap lines on 500 characters
 set lbr
 set tw=500
