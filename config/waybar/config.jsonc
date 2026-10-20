@@ -4,7 +4,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 60, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 5, // Gaps between modules
+    "spacing": 3, // Gaps between modules
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
@@ -20,7 +20,7 @@
         "cpu",
         "memory",
         "pulseaudio",
-        "battery",
+        // "battery",
         "custom/power"
     ],
     // Modules configuration
@@ -31,7 +31,6 @@
 
     "hyprland/workspaces": {
         "format": "{icon}",
-        "on-click": "activate",
         "format-icons": {
             //"1": "",
             "1": "",

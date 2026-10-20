@@ -1,29 +1,49 @@
 -- Refer to the wiki for more information.
 -- https://wiki.hypr.land/Configuring/Start/
 
+hl.env("AQ_TRACE", "1")
+hl.on("hyprland.start", function () 
+    hl.exec_cmd("systemctl --user start hyprpaper.service")
+end)
+
+
 ------------------
 ---- MONITORS ----
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+local primaryMonitor   = "desc:BNQ BenQ GW2790QT F1R00348019"
+local secondaryMonitor = "desc:Samsung Electric Company LS24DG30X H8CY502618"
+
 hl.monitor({
-    output   = "eDP-1",
-    mode     = "1920x1080@60",
+    output   = primaryMonitor,
+    mode     = "2560x1440@59.95",
     position = "0x0",
     scale    = "1",
 })
+hl.monitor({
+    output   = secondaryMonitor,
+    mode     = "1920x1080@60",
+    position = "2560x0",
+    scale    = "1",
+})
+
+-- Workspace-to-monitor bindings
+hl.workspace_rule({ workspace = "1", monitor = primaryMonitor })
+hl.workspace_rule({ workspace = "2", monitor = secondaryMonitor })
 
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
 
-local terminal    = 'kitty'
-local fileManager = 'dolphin'
-local menu        = 'wofi' -- Alt: hyprlauncher
-local webBrowser  = 'firefox'
-local screenshot  = 'grim -g "$(slurp -d)" - | wl-copy'
-local notepad = 'gedit'
-local ide = 'positron'
+local terminal          = 'kitty'
+local fileManager       = 'dolphin'
+local menu              = 'hyprlauncher -t'
+local webBrowser        = 'firefox'
+local screenshot        = 'bash -c \'if command -v slurp >/dev/null 2>&1; then grim -g "$(slurp -d)" - | satty -f - --copy-command wl-copy --early-exit copy; else grim - | satty -f - --initial-tool crop --copy-command wl-copy --early-exit copy; fi\''
+local clipboard         = 'cliphist list | hyprlauncher -m | cliphist decode | wl-copy'
+local notepad           = 'gedit'
+local ide               = 'positron'
 
 -------------------
 ---- AUTOSTART ----
@@ -31,8 +51,15 @@ local ide = 'positron'
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 hl.on("hyprland.start", function () 
+   hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+   hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
+   hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
    hl.exec_cmd("nm-applet --indicator")
    hl.exec_cmd('gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"')
+   hl.exec_cmd("hypridle")
+   hl.exec_cmd("hyprlauncher -d")
+   hl.exec_cmd("wl-paste --type text --watch cliphist store")
+   hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 
 -------------------------------
@@ -73,7 +100,7 @@ hl.config({
         gaps_in  = 5,
         gaps_out = 20,
 
-        border_size = 2,
+        border_size = 1,
 
         col = {
             active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
@@ -95,7 +122,7 @@ hl.config({
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
-        inactive_opacity = .85,
+        inactive_opacity = .99,
 
         shadow = {
             enabled      = true,
@@ -191,7 +218,7 @@ hl.config({
 hl.config({
     misc = {
         force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
     },
 })
 
@@ -240,19 +267,42 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + T",      hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(webBrowser))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(notepad))
-hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(screenshot))
-
-hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+hl.bind(mainMod .. " + F",     hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + B",     hl.dsp.exec_cmd(webBrowser))
+hl.bind(mainMod .. " + A",     hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + N",     hl.dsp.exec_cmd(notepad))
+hl.bind(mainMod .. " + I",     hl.dsp.exec_cmd(ide))
+hl.bind(mainMod .. " + P",     hl.dsp.exec_cmd(screenshot))
+hl.bind("Print",               hl.dsp.exec_cmd(screenshot))
+hl.bind(mainMod .. " + SHIFT + P", function()
+    local mon = nil
+    for _, m in ipairs(hl.get_monitors()) do
+        if m.focused then
+            mon = m.name
+            break
+        end
+    end
+    local cmd = mon
+        and ('grim -o "' .. mon .. '" - | satty -f - --copy-command wl-copy --early-exit copy')
+        or  'grim - | satty -f - --copy-command wl-copy --early-exit copy'
+    hl.dispatch(hl.dsp.exec_cmd(cmd))
+end)
+hl.bind(mainMod .. " + C",     hl.dsp.exec_cmd(clipboard))
+hl.bind(mainMod .. " + L",     hl.dsp.exec_cmd("/home/elkip/.local/share/quickshell-lockscreen/lock.sh"))
+hl.bind(mainMod .. " + M",     hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.window.fullscreen({ mode = "maximized" }))
+hl.bind(mainMod .. " + J",     hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind(mainMod .. " + V", function()
+    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+    hl.dispatch(hl.dsp.window.center())
+end)
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin())
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("killall waybar; waybar"))
+hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exit())
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
@@ -260,11 +310,23 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
--- Move focus with mainMod + arrow keys
+-- Swap windows with mainMod + SHIFT + arrow keys
 hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.window.swap({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.swap({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.swap({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.swap({ direction = "down" }))
+
+-- Resize active window with mainMod + CTRL + arrow keys
+hl.bind(mainMod .. " + CTRL + left",  hl.dsp.window.resize({ x = -40, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.resize({ x = 40,  y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + up",    hl.dsp.window.resize({ x = 0,   y = -40, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + down",  hl.dsp.window.resize({ x = 0,   y = 40,  relative = true }), { repeating = true })
+
+-- Focus / move workspace across monitors
+hl.bind(mainMod .. " + comma",          hl.dsp.focus({ monitor = "-1" }))
+hl.bind(mainMod .. " + period",         hl.dsp.focus({ monitor = "+1" }))
+hl.bind(mainMod .. " + SHIFT + comma",  hl.dsp.workspace.move({ monitor = "-1" }))
+hl.bind(mainMod .. " + SHIFT + period", hl.dsp.workspace.move({ monitor = "+1" }))
 
 -- To switch between windows in a floating workspace:
 hl.bind("SUPER + Tab", function()
@@ -274,10 +336,12 @@ end)
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
+-- Move active window silently with mainMod + ALT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + ALT + " .. key,   hl.dsp.window.move({ workspace = i, silent = true }))
 end
 
 -- Example special workspace (scratchpad)

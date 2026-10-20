@@ -1,3 +1,5 @@
+hyfetch
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -18,6 +20,7 @@ RPROMPT='%F{244}%D{%H:%M:%S}%f'
 # End of lines added by compinstall
 
 export EDITOR=vim
+export CHROME_BIN=/usr/bin/chromium
 # Aliases
 alias vi='vim'
 alias ls='eza --icons -lah'
@@ -28,3 +31,6 @@ alias pydev='source Packages/Python/pydev/bin/activate'
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/nvm/init-nvm.sh
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
