@@ -1,6 +1,7 @@
 alsa-scarlett-gui
 amd-ucode
 android-file-transfer
+ark
 audacity
 base
 base-devel
@@ -26,6 +27,7 @@ gedit
 ghostscript
 gimp
 git
+gnome-keyring
 gparted
 grim
 grub
@@ -51,6 +53,7 @@ jdk-openjdk
 jdk21-openjdk
 kio-admin
 kitty
+konsole
 ksshaskpass
 libpulse
 libzip
@@ -76,6 +79,8 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 prismlauncher
+protonmail-bridge
+protonmail-bridge-core
 pugixml
 qbittorrent
 quickshell
@@ -84,13 +89,15 @@ ristretto
 satty
 sbctl
 sddm
+slurp
 smartmontools
 steam
 stow
 sudo
+swaync
 syncthing
 system-config-printer
-telegram-desktop
+tailscale
 thunar
 thunar-archive-plugin
 thunar-media-tags-plugin
@@ -105,6 +112,7 @@ vlc-plugin-x264
 vulkan-radeon
 wget
 winetricks
+wireless-regdb
 wireless_tools
 wireplumber
 wofi
@@ -113,19 +121,18 @@ xdg-user-dirs
 xdg-utils
 xf86-video-amdgpu
 xf86-video-ati
-xfburn
 yazi
 zip
 zoxide
 zsh
 zsh-syntax-highlighting
+aerion-bin
 archiver
 brother-hl2270dw
 brother-hll2370dw
 calibre-bin
 debtap
 deezer
-ferdium
 galendae-git
 jetbrains-toolbox
 makeself
@@ -133,6 +140,7 @@ microsoft-edge-stable-bin
 mirage
 mullvad-vpn-bin
 positron-ide-devel-bin
+quarto-cli-bin
 scarlett2-git
 sublime-text-4
 ttf-meslo-nerd-font-powerlevel10k
