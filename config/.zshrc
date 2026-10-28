@@ -27,10 +27,21 @@ alias ls='eza --icons -lah'
 alias confh='$EDITOR ~/.config/hypr/hyprland.lua'
 alias confw='$EDITOR ~/.config/waybar/config.jsonc'
 alias confz='$EDITOR ~/.zshrc'
+alias confk='$EDITOR ~/.config/kitty/kitty.conf'
+alias dots='cd ~/Workspace/dotfiles'
 alias pydev='source Packages/Python/pydev/bin/activate'
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/nvm/init-nvm.sh
+
+# Lazy-load nvm for faster shell startup
+_lazy_nvm() {
+  unset -f nvm node npm npx
+  source /usr/share/nvm/init-nvm.sh
+}
+nvm() { _lazy_nvm; nvm "$@"; }
+node() { _lazy_nvm; node "$@"; }
+npm() { _lazy_nvm; npm "$@"; }
+npx() { _lazy_nvm; npx "$@"; }
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)

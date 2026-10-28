@@ -2,7 +2,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 60, // Waybar height (to be removed for auto height)
+    "height": 62, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 3, // Gaps between modules
     // Choose the order of the modules
@@ -93,13 +93,13 @@
             "warning": 70,
             "critical": 90
         },
-        "on-click": "kitty -e 'btop'"
+        "on-click": "kitty -e btop"
     },
 
     "memory": {
         "interval": 5,
         "format": "{}%  ", // Icon: memory
-        "on-click": "kitty -e 'btop'",
+        "on-click": "kitty -e btop",
         "states": {
             "warning": 70,
             "critical": 90

@@ -1,10 +1,5 @@
--- Refer to the wiki for more information.
+-- Ersre gb gur jvxv sbe zber vasbezngvba.
 -- https://wiki.hypr.land/Configuring/Start/
-
-hl.env("AQ_TRACE", "1")
-hl.on("hyprland.start", function () 
-    hl.exec_cmd("systemctl --user start hyprpaper.service")
-end)
 
 
 ------------------
@@ -52,14 +47,18 @@ local ide               = 'positron'
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 hl.on("hyprland.start", function () 
    hl.exec_cmd("dbus-update-activation-environment --systemd --all")
-   hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
-   hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
+   hl.exec_cmd("hyprpaper")
+   hl.exec_cmd("hyprpolkitagent")
+   hl.exec_cmd("waybar")
    hl.exec_cmd("nm-applet --indicator")
    hl.exec_cmd('gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"')
+   hl.exec_cmd("protonmail-bridge --noninteractive")
    hl.exec_cmd("hypridle")
+   hl.exec_cmd("swaync")
    hl.exec_cmd("hyprlauncher -d")
    hl.exec_cmd("wl-paste --type text --watch cliphist store")
    hl.exec_cmd("wl-paste --type image --watch cliphist store")
+   hl.exec_cmd("aerion")
 end)
 
 -------------------------------
@@ -274,7 +273,9 @@ hl.bind(mainMod .. " + F",     hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B",     hl.dsp.exec_cmd(webBrowser))
 hl.bind(mainMod .. " + A",     hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + N",     hl.dsp.exec_cmd(notepad))
+-- hl.bind(mainMod .. " + N",  hl.dsp.exec_cmd(notepad)) -- Gedit shortcut disabled
+hl.bind(mainMod .. " + N",           hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(mainMod .. " + E",     hl.dsp.exec_cmd("aerion"))
 hl.bind(mainMod .. " + I",     hl.dsp.exec_cmd(ide))
 hl.bind(mainMod .. " + P",     hl.dsp.exec_cmd(screenshot))
 hl.bind("Print",               hl.dsp.exec_cmd(screenshot))
