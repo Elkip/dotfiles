@@ -110,7 +110,7 @@ tooltip {
     border-radius: 40px;
     border: solid;
     opacity: .8;
-    /* padding: 0px 0px 0px 10px; */
+    padding: 0 12px;
     font-weight: bold;   
 }
 

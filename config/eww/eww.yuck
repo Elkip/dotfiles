@@ -1,0 +1,131 @@
+;; ~/.config/eww/eww.yuck
+;; Weather + now playing + server status panel
+
+;; ---- Data sources ----
+(defpoll weather :interval "15m"
+  :initial '{"icon":"🌡️","temp":"--","desc":"Loading","feels":"--","humidity":"--","wind":"--"}'
+  "scripts/weather.sh")
+
+(deflisten np
+  :initial '{"status":"Stopped","artist":"","title":"Nothing playing","art":""}'
+  "scripts/nowplaying.sh")
+
+(deflisten server
+  :initial '{"up":false,"latency":"--","services":[]}'
+  "scripts/server.sh")
+
+(defpoll schedule :interval "30m"
+  :initial '{"events":[]}'
+  "scripts/schedule.sh")
+
+(defpoll osrs :interval "60m"
+  :initial '{"rsn":"","total_level":0,"combat_level":0,"stats":{},"rank":null}'
+  "scripts/osrs.sh")
+
+;; ---- Cards ----
+(defwidget weather-card []
+  (box :class "card weather" :orientation "h" :space-evenly false :spacing 16
+    (label :class "weather-icon" :text {weather.icon})
+    (box :orientation "v" :space-evenly false :valign "center"
+      (box :orientation "h" :space-evenly false :halign "start"
+        (label :class "weather-temp" :text "${weather.temp}°")
+        (label :class "weather-desc" :valign "end" :text {weather.desc}))
+      (label :class "dim" :halign "start" :text "Feels like ${weather.feels}°")
+      (label :class "dim" :halign "start"
+             :text "💧 ${weather.humidity}%   💨 ${weather.wind} mph"))))
+
+(defwidget media-card []
+  (box :class "card media ${np.status == 'Playing' ? 'playing' : 'idle'}"
+       :orientation "h" :space-evenly false :spacing 14
+    (box :class "art"
+         :style {np.art != "" ? "background-image: url('${np.art}');" : ""})
+    (box :orientation "v" :space-evenly false :valign "center" :hexpand true :spacing 2
+      (label :class "media-title" :halign "start" :limit-width 24 :text {np.title})
+      (label :class "media-artist" :halign "start" :limit-width 28 :text {np.artist})
+      (box :class "controls" :orientation "h" :space-evenly false :halign "start" :spacing 6
+        (button :class "ctl" :onclick "playerctl previous" "⏮")
+        (button :class "ctl ctl-main" :onclick "playerctl play-pause"
+                {np.status == "Playing" ? "⏸" : "▶"})
+        (button :class "ctl" :onclick "playerctl next" "⏭")))))
+
+(defwidget server-card []
+  (box :class "card server" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "h" :space-evenly false
+      (box :class "dot ${server.up ? 'up' : 'down'}" :valign "center")
+      (label :class "server-name" :halign "start" :hexpand true :text "Server")
+      (label :class "dim" :halign "end"
+             :text {server.up ? "${server.latency} ms" : "unreachable"}))
+    (box :orientation "h" :space-evenly false :spacing 8 :halign "start"
+      (for svc in {server.services}
+        (label :class "chip ${svc.ok ? 'ok' : 'bad'}" :text {svc.name})))))
+
+(defwidget schedule-card []
+  (box :class "card schedule" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false
+      (label :class "schedule-title" :halign "start" :hexpand true :text "📅 Schedule")
+      (label :class "dim" :halign "end" :text "Next 7 days"))
+    (box :class "events" :orientation "v" :space-evenly false :spacing 4
+      (label :class "dim no-events" :visible {arraylength(schedule.events) == 0} :text "No upcoming events")
+      (for ev in {schedule.events}
+        (box :class "event" :orientation "h" :space-evenly false :spacing 10
+          (box :orientation "v" :space-evenly false :valign "center" :class "event-date"
+            (label :class "event-day" :text {ev.date}))
+          (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+            (label :class "event-summary" :halign "start" :limit-width 28 :text {ev.summary})
+            (label :class "dim event-time" :halign "start" :text {ev.time})))))))
+
+(defwidget osrs-card []
+  (box :class "card osrs" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false
+      (label :class "osrs-icon" :text "⚔️")
+      (box :orientation "v" :space-evenly false :hexpand true
+        (label :class "osrs-rsn" :halign "start" :text {osrs.rsn})
+        (label :class "dim" :halign "start" :text "Ironman"))
+      (box :orientation "v" :space-evenly false :halign "end"
+        (label :class "osrs-total" :halign "end" :text "${osrs.total_level}")
+        (label :class "dim" :halign "end" :text "Total")))
+    (box :orientation "h" :space-evenly true :class "osrs-stats"
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "🗡️")
+        (label :class "stat-val" :text {osrs.stats.atk}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "💪")
+        (label :class "stat-val" :text {osrs.stats.str}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "🛡️")
+        (label :class "stat-val" :text {osrs.stats.def}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "❤️")
+        (label :class "stat-val" :text {osrs.stats.hp}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "🏹")
+        (label :class "stat-val" :text {osrs.stats.ranged}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "🔮")
+        (label :class "stat-val" :text {osrs.stats.magic}))
+      (box :orientation "v" :space-evenly false
+        (label :class "stat-icon" :text "✝️")
+        (label :class "stat-val" :text {osrs.stats.prayer})))
+    (box :orientation "h" :space-evenly false
+      (label :class "dim" :halign "start" :hexpand true :text "Combat ${osrs.combat_level}")
+      (label :class "dim" :halign "end" :text "Rank #${osrs.rank}"))))
+
+(defwidget panel []
+  (box :class "panel" :orientation "v" :space-evenly false :spacing 12
+    (weather-card)
+    (media-card)
+    (schedule-card)
+    (osrs-card)
+    (server-card)))
+
+;; ---- Window ----
+(defwindow desktop-panel
+  :monitor 0
+  :geometry (geometry :x "24px"
+                      :y "24px"
+                      :width "340px"
+                      :anchor "top right")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  (panel))

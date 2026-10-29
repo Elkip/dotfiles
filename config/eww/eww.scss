@@ -1,0 +1,191 @@
+// ~/.config/eww/eww.scss
+
+$bg:     rgba(20, 22, 30, 0.88);
+$card:   rgba(255, 255, 255, 0.05);
+$fg:     #c8d3f5;
+$muted:  #7a88b8;
+$accent: #82aaff;
+$good:   #c3e88d;
+$bad:    #ff757f;
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  color: $fg;
+}
+
+.panel {
+  background-color: $bg;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px;
+}
+
+.card {
+  background-color: $card;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.dim {
+  color: $muted;
+  font-size: 12px;
+}
+
+// ---- Weather ----
+.weather-icon {
+  font-size: 42px;
+}
+
+.weather-temp {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.weather-desc {
+  font-size: 13px;
+  color: $muted;
+  margin-left: 10px;
+  margin-bottom: 6px;
+}
+
+// ---- Media ----
+.art {
+  min-width: 64px;
+  min-height: 64px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  background-size: cover;
+  background-position: center;
+}
+
+.media-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.media-artist {
+  font-size: 12px;
+  color: $muted;
+}
+
+.media.idle .media-title {
+  color: $muted;
+}
+
+.ctl {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.ctl-main {
+  color: $accent;
+}
+
+// ---- Schedule ----
+.schedule-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.events {
+  margin-top: 4px;
+}
+
+.event {
+  padding: 6px 8px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.event-date {
+  min-width: 42px;
+}
+
+.event-day {
+  font-size: 12px;
+  font-weight: bold;
+  color: $accent;
+}
+
+.event-summary {
+  font-size: 13px;
+}
+
+.event-time {
+  font-size: 11px;
+}
+
+.no-events {
+  padding: 8px 0;
+}
+
+// ---- OSRS ----
+.osrs-icon {
+  font-size: 28px;
+  margin-right: 10px;
+}
+
+.osrs-rsn {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.osrs-total {
+  font-size: 18px;
+  font-weight: bold;
+  color: $accent;
+}
+
+.osrs-stats {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 8px 4px;
+  margin-top: 4px;
+}
+
+.stat-icon {
+  font-size: 14px;
+}
+
+.stat-val {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+// ---- Server ----
+.server-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.dot {
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+
+  &.up   { background-color: $good; }
+  &.down { background-color: $bad; }
+}
+
+.chip {
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 10px;
+
+  &.ok {
+    color: $good;
+    background-color: rgba(195, 232, 141, 0.12);
+  }
+
+  &.bad {
+    color: $bad;
+    background-color: rgba(255, 117, 127, 0.12);
+  }
+}
