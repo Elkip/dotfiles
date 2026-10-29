@@ -13,7 +13,7 @@ APP_NAME="Hyprland"
 # Set any of these to 0 to disable that notification type.
 NOTIFY_CONFIG_RELOAD=1   # config reloaded / config errors
 NOTIFY_MONITORS=1        # monitor connected / disconnected
-NOTIFY_URGENT=1          # a window requested attention
+NOTIFY_URGENT=0          # a window requested attention (disabled - too noisy)
 NOTIFY_SCREENCAST=1      # screen sharing started / stopped
 
 # --- sanity checks -----------------------------------------------------------

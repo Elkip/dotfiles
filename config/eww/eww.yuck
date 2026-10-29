@@ -22,6 +22,14 @@
   :initial '{"rsn":"","total_level":0,"combat_level":0,"stats":{},"rank":null}'
   "scripts/osrs.sh")
 
+(defpoll mail :interval "2m"
+  :initial '{"unread":0}'
+  "scripts/mail.sh")
+
+(defpoll todoist :interval "60m"
+  :initial '{"tasks":[],"label_id":null}'
+  "scripts/todoist.sh")
+
 ;; ---- Cards ----
 (defwidget weather-card []
   (box :class "card weather" :orientation "h" :space-evenly false :spacing 16
@@ -64,15 +72,16 @@
     (box :orientation "h" :space-evenly false
       (label :class "schedule-title" :halign "start" :hexpand true :text "📅 Schedule")
       (label :class "dim" :halign "end" :text "Next 7 days"))
-    (box :class "events" :orientation "v" :space-evenly false :spacing 4
-      (label :class "dim no-events" :visible {arraylength(schedule.events) == 0} :text "No upcoming events")
-      (for ev in {schedule.events}
-        (box :class "event" :orientation "h" :space-evenly false :spacing 10
-          (box :orientation "v" :space-evenly false :valign "center" :class "event-date"
-            (label :class "event-day" :text {ev.date}))
-          (box :orientation "v" :space-evenly false :valign "center" :hexpand true
-            (label :class "event-summary" :halign "start" :limit-width 28 :text {ev.summary})
-            (label :class "dim event-time" :halign "start" :text {ev.time})))))))
+    (scroll :class "events-scroll" :vscroll true :hscroll false :height 80
+      (box :class "events" :orientation "v" :space-evenly false :spacing 4
+        (label :class "dim no-events" :visible {arraylength(schedule.events) == 0} :text "No upcoming events")
+        (for ev in {schedule.events}
+          (box :class "event" :orientation "h" :space-evenly false :spacing 10
+            (box :orientation "v" :space-evenly false :valign "center" :class "event-date"
+              (label :class "event-day" :text {ev.date}))
+            (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+              (label :class "event-summary" :halign "start" :limit-width 28 :text {ev.summary})
+              (label :class "dim event-time" :halign "start" :text {ev.time}))))))))
 
 (defwidget osrs-card []
   (box :class "card osrs" :orientation "v" :space-evenly false :spacing 8
@@ -110,10 +119,40 @@
       (label :class "dim" :halign "start" :hexpand true :text "Combat ${osrs.combat_level}")
       (label :class "dim" :halign "end" :text "Rank #${osrs.rank}"))))
 
+(defwidget mail-card []
+  (button :class "card mail ${mail.unread > 0 ? 'has-mail' : ''}"
+          :onclick "aerion &"
+    (box :orientation "h" :space-evenly false :spacing 12
+      (label :class "mail-icon" :text {mail.unread > 0 ? "📬" : "📭"})
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "mail-title" :halign "start" :text "Inbox")
+        (label :class "dim" :halign "start"
+               :text {mail.unread > 0 ? "${mail.unread} unread" : "No new mail"})))))
+
+(defwidget todoist-card []
+  (box :class "card todoist" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false
+      (label :class "todoist-title" :halign "start" :hexpand true :text "✓ Tasks")
+      (button :class "todoist-add" :onclick "~/.config/eww/scripts/todoist-add.sh &" "+"))
+    (scroll :class "todo-scroll" :vscroll true :hscroll false :height 160
+      (box :class "todo-list" :orientation "v" :space-evenly false :spacing 4
+        (label :class "dim no-tasks" :visible {arraylength(todoist.tasks) == 0} :text "No tasks")
+        (for task in {todoist.tasks}
+          (button :class "todo-item ${task.overdue ? 'overdue' : ''} p${task.priority}"
+                  :onclick "~/.config/eww/scripts/todoist-complete.sh ${task.id} &"
+            (box :orientation "h" :space-evenly false :spacing 8
+              (label :class "todo-check" :text "○")
+              (box :orientation "v" :space-evenly false :hexpand true
+                (label :class "todo-content" :halign "start" :limit-width 30 :text {task.content})
+                (label :class "dim todo-due" :halign "start" :visible {task.due != "null"}
+                       :text {task.due})))))))))
+
 (defwidget panel []
   (box :class "panel" :orientation "v" :space-evenly false :spacing 12
     (weather-card)
     (media-card)
+    (mail-card)
+    (todoist-card)
     (schedule-card)
     (osrs-card)
     (server-card)))

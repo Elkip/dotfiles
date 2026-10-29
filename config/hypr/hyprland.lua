@@ -303,7 +303,8 @@ hl.bind(mainMod .. " + V", function()
     hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
     hl.dispatch(hl.dsp.window.center())
 end)
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin())
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(clipboard))  -- clipboard history
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.pin())         -- pin window
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("killall waybar; waybar"))
 hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exit())
 

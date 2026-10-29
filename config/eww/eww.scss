@@ -87,14 +87,97 @@ $bad:    #ff757f;
   color: $accent;
 }
 
+// ---- Mail ----
+.mail {
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.mail-icon {
+  font-size: 28px;
+}
+
+.mail-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.mail.has-mail .mail-title {
+  color: $accent;
+}
+
+// ---- Todoist ----
+.todoist-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.todoist-add {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 8px;
+  border-radius: 6px;
+  color: $accent;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.todo-scroll {
+  margin-top: 4px;
+}
+
+.todo-list {
+}
+
+.todo-item {
+  padding: 6px 8px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  &.overdue .todo-content {
+    color: $bad;
+  }
+
+  &.p1 .todo-check { color: $bad; }
+  &.p2 .todo-check { color: #ff9e64; }
+  &.p3 .todo-check { color: $accent; }
+}
+
+.todo-check {
+  font-size: 14px;
+  min-width: 18px;
+}
+
+.todo-content {
+  font-size: 13px;
+}
+
+.todo-due {
+  font-size: 11px;
+}
+
+.no-tasks {
+  padding: 8px 0;
+}
+
 // ---- Schedule ----
 .schedule-title {
   font-size: 14px;
   font-weight: bold;
 }
 
-.events {
+.events-scroll {
   margin-top: 4px;
+}
+
+.events {
 }
 
 .event {
