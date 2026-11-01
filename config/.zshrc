@@ -35,13 +35,13 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # Lazy-load nvm for faster shell startup
 _lazy_nvm() {
-  unset -f nvm node npm npx
+  unset -f nvm node npm npx ng
   source /usr/share/nvm/init-nvm.sh
+  # Load Angular CLI autocompletion after nvm
+  command -v ng &>/dev/null && source <(ng completion script)
 }
 nvm() { _lazy_nvm; nvm "$@"; }
 node() { _lazy_nvm; node "$@"; }
 npm() { _lazy_nvm; npm "$@"; }
 npx() { _lazy_nvm; npx "$@"; }
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+ng() { _lazy_nvm; ng "$@"; }

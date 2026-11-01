@@ -4,6 +4,10 @@
 #   TODOIST_TOKEN=your-api-token
 #   TODOIST_PROJECT=Personal
 
+# Wait for network on startup
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+source "$SCRIPT_DIR/network-wait.sh" && wait_for_network 10
+
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/eww/server.secret"
 [[ -f "$CONFIG" ]] && source "$CONFIG"
 

@@ -5,6 +5,10 @@ LOCATION="Pittsburgh"
 
 fallback='{"icon":"❔","temp":"--","desc":"Unavailable","feels":"--","humidity":"--","wind":"--"}'
 
+# Wait for network on startup
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+source "$SCRIPT_DIR/network-wait.sh" && wait_for_network 10 || { echo "$fallback"; exit 0; }
+
 data=$(curl -sf --max-time 10 "https://wttr.in/${LOCATION// /+}?format=j1") || { echo "$fallback"; exit 0; }
 code=$(jq -r '.current_condition[0].weatherCode' <<<"$data" 2>/dev/null)
 

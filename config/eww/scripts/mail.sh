@@ -13,6 +13,12 @@ CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/eww/server.secret"
 IMAP_HOST="${IMAP_HOST:-127.0.0.1}"
 IMAP_PORT="${IMAP_PORT:-1143}"
 
+# Wait for IMAP service to be available (e.g., protonmail-bridge)
+for _ in {1..20}; do
+  bash -c "echo >/dev/tcp/${IMAP_HOST}/${IMAP_PORT}" 2>/dev/null && break
+  sleep 2
+done
+
 if [[ -z "$IMAP_USER" || -z "$IMAP_PASS" ]]; then
   echo '{"unread":0,"error":"no imap config"}'
   exit 0
