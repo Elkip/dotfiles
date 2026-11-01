@@ -47,6 +47,7 @@ local ide               = 'positron'
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 hl.on("hyprland.start", function () 
    hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+   hl.exec_cmd("~/.local/share/quickshell-lockscreen/randomize-theme.sh")
    hl.exec_cmd("hyprpaper")
    hl.exec_cmd("hyprpolkitagent")
    hl.exec_cmd("waybar")
